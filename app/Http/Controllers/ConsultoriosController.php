@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Consultorios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ConsultoriosController extends Controller
 {
@@ -18,62 +19,24 @@ class ConsultoriosController extends Controller
         if (auth()->user()->rol != "Administrador" && auth()->user()->rol != "Secretaria") {
             return redirect('Inicio');
         }
-        return view('modulos.Consultorios');
+
+        $consultorios = Consultorios::all();
+
+        return view('modulos.Consultorios')->with('consultorios', $consultorios);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        Consultorios::create(['consultorio' => request('consultorio')]);
+
+        return redirect('Consultorios');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Consultorios  $consultorios
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Consultorios $consultorios)
+    public function update(Request $request)
     {
-        //
-    }
+        DB::table('consultorios')->where('id', request('id'))->update(['consultorio' => request('consultorioE')]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Consultorios  $consultorios
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Consultorios $consultorios)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Consultorios  $consultorios
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Consultorios $consultorios)
-    {
-        //
+        return redirect('Consultorios');
     }
 
     /**
@@ -82,8 +45,10 @@ class ConsultoriosController extends Controller
      * @param  \App\Models\Consultorios  $consultorios
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Consultorios $consultorios)
+    public function destroy($id)
     {
-        //
+        DB::table('consultorios')->whereId($id)->delete();
+
+        return redirect('Consultorios');
     }
 }
