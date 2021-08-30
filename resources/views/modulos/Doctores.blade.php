@@ -16,7 +16,7 @@
             </div>
 
             <div class="box-body">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped dt-responsive">
                     <thead>
                         <tr>
                             <th>TD</th>
@@ -66,7 +66,9 @@
                             @endif
 
                             <td>
-                                <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-danger EliminarDoctor" Did="{{$doctor->id}}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
 
@@ -171,7 +173,7 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Crear</button>
-                    <button type="button" data-dismiss="modal" class="btn btn-danger">Cancelar</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-danger ">Cancelar</button>
 
                 </div>
             </form>

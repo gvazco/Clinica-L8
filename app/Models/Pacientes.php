@@ -5,20 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Doctores extends Model
+class Pacientes extends Model
 {
     use HasFactory;
 
     protected $table = 'users';
 
     protected $fillable = [
-        'name', 'email', 'password', 'id_consultorio', 'sexo', 'documento', 'telefono', 'rol',
+
+        'name', 'email', 'password', 'sexo', 'id_consultorio', 'telefono', 'documento', 'rol'
+
     ];
 
     public $timestamps = false;
-
-    public function CON()
-    {
-        return $this->belongsTo(Consultorios::class, 'id_consultorio');
-    }
 }

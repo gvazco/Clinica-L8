@@ -28,12 +28,17 @@
     <!-- Daterange picker -->
     <link rel="stylesheet" href="http://127.0.0.1:8000/bower_components/bootstrap-daterangepicker/daterangepicker.css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <!-- DataTables -->
+    <link rel="stylesheet"
+        href="http://127.0.0.1:8000/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
+    <link rel="stylesheet"
+        href="http://127.0.0.1:8000/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
+
+    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+
+
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -44,9 +49,7 @@
     <div class="wrapper">
 
 
-
     </div>
-
 
     @if(Auth::user())
 
@@ -55,6 +58,10 @@
     @if(auth()->user()->rol == "Secretaria")
 
     @include('modulos.menuSecretaria')
+
+    @elseif(auth()->user()->rol == "Doctor")
+
+    @include('modulos.menuDoctor')
 
     @endif
 
@@ -65,6 +72,7 @@
     @yield('contenido')
 
     @endif
+
     <!-- ./wrapper -->
 
     <!-- jQuery 3 -->
@@ -100,6 +108,116 @@
     <script src="http://127.0.0.1:8000/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="http://127.0.0.1:8000/dist/js/demo.js"></script>
+
+    <!-- DataTables -->
+    <script src="http://127.0.0.1:8000/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+
+    <script src="http://127.0.0.1:8000/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
+
+    <script src="http://127.0.0.1:8000/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(".table").DataTable({
+            "language": {
+                "sSearch" : "Buscar:",
+                "sEmptyTable": "No hay datos en la Tabla",
+                "sZeroRecords": "No se encontraron resultados",
+                "sInfo": "Mostrando registro del _START_ al _END_ de un total _TOTAL_",
+                "sInfoEmpty":"Mostrando registros del 0 al 0 de un total de 0",
+                "sInfoFiltered": "(filtrando de un total de _MAX_ registros)",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior",
+                },
+
+                "sLoadingRecords": "Cargando...",
+                "sLengthMenu": "Mostrar _MENU_ registros"
+
+            }
+        });
+    </script>
+
+    <!-- SweetAlert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if(session('registrado') == 'Si')
+
+    <script type="text/javascript">
+        Swal.fire('El Doctor ha sido registrado', '', 'success');
+    </script>
+
+    @elseif(session('Agregado') == 'Si')
+
+    <script type="text/javascript">
+        Swal.fire('El Paciente se ha agregado correctamente', '', 'success');
+    </script>
+
+    @elseif(session('actualizadoP') == 'Si')
+
+    <script type="text/javascript">
+        Swal.fire('El Paciente se actualizo correctamente', '', 'success');
+    </script>
+
+    @endif
+
+    <script type="text/javascript">
+        $('.table').on('click', '.EliminarDoctor', function(){
+
+            var Did = $(this).attr('Did');
+
+            Swal.fire({
+
+                title: '¿Seguro que deseas eliminar este Doctor?',
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Eliminar',
+                confirmButtonColor: '#3085d6',
+
+            }).then((result) => {
+
+                if(result.isConfirmed){
+
+                    window.location = "Eliminar-Doctor/"+Did;
+
+                }
+
+            }) 
+
+        });
+
+        $('.table').on('click', '.EliminarPaciente', function(){
+        
+        var Pid = $(this).attr('Pid');
+        var Paciente = $(this).attr('Paciente');
+        
+        Swal.fire({
+        
+        title: '¿Seguro que deseas eliminar este Paciente: '+Paciente+' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar',
+        confirmButtonColor: '#3085d6',
+        
+        }).then((result) => {
+        
+        if(result.isConfirmed){
+        
+        window.location = "Eliminar-Paciente/"+Pid;
+        
+        }
+        
+        })
+        
+        });
+
+    </script>
+
 </body>
 
 </html>
