@@ -57,6 +57,10 @@ Route::get('Eliminar-Paciente/{id}', [PacientesController::class, 'destroy']);
 /*                                    Citas                                   */
 /* -------------------------------------------------------------------------- */
 Route::get('Citas/{id}', [CitasController::class, 'index']);
-Route::post('Citas', [CitasController::class, 'HorarioDoctor']);
+Route::post('Citas/{id}', [CitasController::class, 'HorarioDoctor']);
+Route::put('editar-horario/{id}', [CitasController::class, 'EditarHorario']);
 
 /* -------------------------------------------------------------------------- */
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -29,7 +29,16 @@ class CitasController extends Controller
     {
         $datos = request();
 
-        DB::table('horarios')->insert(['id_doctor' => auth()->user()->id, 'horaInicio' => $datos["horaIniio"], 'horaFin' => $datos["horaFin"]]);
+        DB::table('horarios')->insert(['id_doctor' => auth()->user()->id, 'horaInicio' => $datos["horaInicio"], 'horaFin' => $datos["horaFin"]]);
+
+        return redirect('Citas/' . auth()->user()->id);
+    }
+
+    public function EditarHorario(Request $request)
+    {
+        $datos = request();
+
+        DB::table('horarios')->where('id', $datos['id'])->update(['horaInicio' => $datos["horaInicioE"], 'horaFin' => $datos["horaFinE"]]);
 
         return redirect('Citas/' . auth()->user()->id);
     }

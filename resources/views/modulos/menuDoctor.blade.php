@@ -9,7 +9,7 @@
             </li>
             <li>
                 <a href="{{url('Citas/'.auth()->user()->id)}}">
-                    <i class="fa fa-medkit"></i>
+                    <i class="fa fa-calendar-check-o"></i>
                     <span>Citas</span>
                 </a>
             </li>

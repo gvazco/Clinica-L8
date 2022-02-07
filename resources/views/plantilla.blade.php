@@ -35,6 +35,12 @@
     <link rel="stylesheet"
         href="http://127.0.0.1:8000/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
 
+    <!-- FullCalendar -->
+    <link rel="stylesheet" href="http://127.0.0.1:8000/bower_components/fullcalendar/dist/fullcalendar.min.css">
+
+    <link rel="stylesheet" href="http://127.0.0.1:8000/bower_components/fullcalendar/dist/fullcalendar.print.min.css"
+        media="print">
+
     <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
 
@@ -53,19 +59,23 @@
 
     @if(Auth::user())
 
-    @include('modulos.cabecera')
+    <div class="wrapper">
 
-    @if(auth()->user()->rol == "Secretaria")
+        @include('modulos.cabecera')
 
-    @include('modulos.menuSecretaria')
+        @if(auth()->user()->rol == "Secretaria")
 
-    @elseif(auth()->user()->rol == "Doctor")
+        @include('modulos.menuSecretaria')
 
-    @include('modulos.menuDoctor')
+        @elseif(auth()->user()->rol == "Doctor")
 
-    @endif
+        @include('modulos.menuDoctor')
 
-    @yield('content')
+        @endif
+
+        @yield('content')
+
+    </div>
 
     @else
 
@@ -138,6 +148,13 @@
             }
         });
     </script>
+
+    <!--FullCalendar-->
+    <script src="http://127.0.0.1:8000/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script src="http://127.0.0.1:8000/bower_components/fullcalendar/dist/locale/es.js"></script>
+
+    <!--MomentJs-->
+    <script src="http://127.0.0.1:8000/bower_components/moment/moment.js"></script>
 
     <!-- SweetAlert2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -215,6 +232,27 @@
         })
         
         });
+
+    </script>
+
+    <script type="text/javascript">
+        var date = new Date();
+        var d = date.getDate(),
+            m = date.getMonth(),
+            a = date.getFullYear()
+
+        $('#calendario').fullCalendar({
+            defaultView: 'agendaWeek',
+            hiddenDays: [0],
+
+            scrollTime: "08:00:00",
+            minTime: "08:00:00",
+            maxTime: "16:00:00"
+        });
+
+        
+        
+
 
     </script>
 
